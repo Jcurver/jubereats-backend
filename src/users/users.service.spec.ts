@@ -1,3 +1,4 @@
+import { UserRole } from 'src/users/entities/user.entity';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { JwtService } from 'src/jwt/jwt.service';
@@ -70,13 +71,13 @@ describe('UserService', () => {
     const createAccountArgs = {
       email: 'bs@email.com',
       password: 'bs.password',
-      role: 0,
+      role: UserRole.Client,
     };
 
     it('should fail if user exists', async () => {
       usersRepository.findOne.mockResolvedValue({
         id: 1,
-        email: '',
+        email: 0,
       });
       const result = await service.createAccount(createAccountArgs);
       expect(result).toMatchObject({
